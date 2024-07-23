@@ -1,12 +1,12 @@
-import express from 'express'
-import morgan from 'morgan'
-import cors from 'cors'
+import express from 'express';
+import morgan from 'morgan';
+import cors from 'cors';
 import config from './config.js';
 
 //Import rout`s
 import gimnasioRoutes from './routes/gimnasio.routes.js';
 import personalRoutes from './routes/personal.routes.js';
-import clientsRoutes from './routes/clients.routes.js'
+import clientsRoutes from './routes/clients.routes.js';
 
 //Create app
 export const app = express();

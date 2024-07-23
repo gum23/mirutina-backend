@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose , { Schema, model } from 'mongoose';
 
 
 const clientSchema = new Schema ({
@@ -31,6 +31,10 @@ const clientSchema = new Schema ({
         type: String,
         required: true,
         trim: true
+    },
+    rutina: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "rutinas"
     }
 },{
     versionKey: false,
