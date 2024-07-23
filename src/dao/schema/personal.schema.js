@@ -16,12 +16,6 @@ const personalSchema = new Schema ({
         required: true,
         trim: true
     },
-    dni: {
-        type: Number,
-        required: true,
-        trim: true,
-        unique: true
-    },
     city: {
         type: String,
         required: true,

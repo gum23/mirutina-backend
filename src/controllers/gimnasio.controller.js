@@ -4,20 +4,23 @@ import Gimnasio from '../dao/schema/gimnasio.schema.js';
 export const getGimnasios = async (req, res) => {
     try {
         const gimnasios = await Gimnasio.find()
-        return res.json(gimnasios)
+        if(!gimnasios) return res.status(204).json();
+
+        res.status(200).json(gimnasios)
     } catch (error) {
-        res.json(error)
+        res.status(500).json({message: `Error interno del servidor ${error}`});
     }
 }
 
 //Trae los datos del gimnasio que solicitamos por medio de id
 export const getGimnasio = async (req, res) => {
     try {
-        const gimnasioFound = await Gimnasio.findById(req.params.id)
+        const gimnasioFound = await Gimnasio.findById(req.params.gid)
         if(!gimnasioFound) return res.status(204).json();
-        return res.json(gimnasioFound)
+
+        res.status(200).json(gimnasioFound)
     } catch (error) {
-        res.json(error)
+        res.status(500).json({message: `Error interno del servidor ${error}`});
     }
 }
 
@@ -25,7 +28,7 @@ export const getGimnasio = async (req, res) => {
 export const createGimnasio = async (req, res) => {
 
     try {
-        const gimnasioFound = await Gimnasio.findOne({cuil: req.body.cuil}) //Compara el cuil nueva con las que hay en DBB
+        const gimnasioFound = await Gimnasio.findOne({cuil: req.body.email}) //Compara el email nueva con las que hay en DBB
         
         if(gimnasioFound) {
             return res.status(301).json({message: 'El gimnasio ya existe'}); //Si ya existe ese gimnasio
@@ -33,7 +36,7 @@ export const createGimnasio = async (req, res) => {
         
         const gimnasio = new Gimnasio(req.body)     //Si no existe crea un nuevo objeto gimnasio
         const savedGym = await gimnasio.save();   //Guarda los datos en la DDBB en la coleccion "gimnasios"
-        res.json(savedGym)   //Devuelve lo que acaba de guardar en la DDBB
+        res.status(200).json(savedGym)   //Devuelve lo que acaba de guardar en la DDBB
         
     } catch (error) {
         res.status(500).json({message: `Error interno del servidor: ${error}`})
@@ -44,22 +47,24 @@ export const createGimnasio = async (req, res) => {
 //Actualiza la información que querramos en la base de datos
 export const updateGimnasio = async (req, res) => {
     try {
-        const gimnasioUpdated = await Gimnasio.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        const gimnasioUpdated = await Gimnasio.findByIdAndUpdate(req.params.gid, req.body, {new: true})
         if(!gimnasioUpdated) return res.status(204).json();
-        res.json(gimnasioUpdated)
+
+        res.status(200).json(gimnasioUpdated)
     } catch (error) {
-        res.json(error)
+        res.status(500).json({message: `Error interno del servidor ${error}`});
     }
 }
 
 //Elimina el gimnasio definitivamente de la base de datos (Ver modo de arreglar, para recuperaciòn de datos)
 export const deleteGimnasio = async (req, res) => {
     try {
-        const gimnasioFound = await Gimnasio.findByIdAndDelete(req.params.id)
+        const gimnasioFound = await Gimnasio.findByIdAndDelete(req.params.gid)
         if(!gimnasioFound) return res.status(204).json();
-        return res.json(gimnasioFound)
+
+        res.status(200).json(gimnasioFound)
     } catch (error) {
-        res.json(error)
+        res.status(500).json({message: `Error interno del servidor ${error}`});
     }
 
 }

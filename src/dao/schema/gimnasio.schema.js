@@ -6,12 +6,6 @@ const gymSchema = new Schema ({
         required: true,
         trim: true
     },
-    cuil: {
-        type: Number,
-        required: true,
-        trim: true,
-        unique: true
-    },
     province: {
         type: String,
         required: true,
