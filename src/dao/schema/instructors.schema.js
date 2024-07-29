@@ -1,12 +1,7 @@
 import { Schema, model } from "mongoose";
 
-const personalSchema = new Schema ({
+const instructorsSchema = new Schema ({
     name: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    lastName: {
         type: String,
         required: true,
         trim: true
@@ -21,7 +16,7 @@ const personalSchema = new Schema ({
         required: true,
         trim: true
     },
-    mail: {
+    email: {
         type: String,
         required: true,
         trim: true
@@ -36,4 +31,4 @@ const personalSchema = new Schema ({
     timestamps: true
 });
 
-export default model('personal', personalSchema);
+export default model('instructors', instructorsSchema);

@@ -1,7 +1,7 @@
 import mongoose , { Schema, model } from 'mongoose';
 
 
-const clientSchema = new Schema ({
+const usersSchema = new Schema ({
     name: {
         type: String,
         required: true,
@@ -22,7 +22,7 @@ const clientSchema = new Schema ({
         required: true,
         trim: true
     },
-    mail: {
+    email: {
         type: String,
         required: true,
         trim: true
@@ -31,6 +31,10 @@ const clientSchema = new Schema ({
         type: String,
         required: true,
         trim: true
+    },
+    instructor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "instructors"
     },
     rutina: {
         type: mongoose.Schema.Types.ObjectId,
@@ -41,4 +45,4 @@ const clientSchema = new Schema ({
     timestamps: true
 });
 
-export default model('clients', clientSchema);
+export default model('users', usersSchema);
