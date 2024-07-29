@@ -16,7 +16,7 @@ export const initializePassport = () => {
         async(req, username, password, done) => {
             try {
                 const user = req.body;
-                // console.log(user);
+                
                 if (user.role == "instructor") {
                     const instructorFound = await instructorsModel.findOne({email: username});
                     if(instructorFound) return done("Error, el instructor ya está registrado");
@@ -48,13 +48,47 @@ export const initializePassport = () => {
                         username,
                         passwordCrypt
                     )
-                    console.log(newUser);
+                    
                     const result = await usersModel.create(newUser);
                     return done(null, result);
                 }
             } catch (error) {
                 return done(`Error al crear el usuario`, error);
             }
+        }
+    ));
+
+    passport.use('login', new LocalStrategy.Strategy(
+        {usernameField: 'email', passReqToCallback: true},
+        async(req, username, password, done) => {
+            const userData = req.body;
+            
+            try {
+                if(userData.role == "instructor"){
+
+                    const user = await instructorsModel.findOne({email: username});
+                    if(!user) return done(null, false);
+    
+                    const comparePass = compareHashAndPass(password, user);
+                    if(comparePass == false) return done(null, false);
+    
+                    return done(null, user);
+    
+                } else if(userData.role == "usuario"){
+    
+                    const user = await usersModel.findOne({email: username});
+                    if(!user) return done(null, false);
+    
+                    const comparePass = compareHashAndPass(password, user);
+                    if(comparePass == false) return done(null, false);
+    
+                    return done(null, user);
+    
+                }
+            } catch (error) {
+                return done("Error al ingresar", error);
+            }
+
         }
     ));
 
