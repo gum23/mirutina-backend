@@ -23,7 +23,7 @@ const activitySchema = new Schema({
             required: false,
             trim: true
         },
-        timepo: {
+        tiempo: {
             type: Number,
             required: false,
             trim: true

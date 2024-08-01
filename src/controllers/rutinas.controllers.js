@@ -1,4 +1,3 @@
-import Clients from '../dao/schema/clients.schema.js';
 import Rutinas from '../dao/schema/rutinas.schema.js';
 
 export const getRutinas = async (req, res) => {
@@ -27,27 +26,28 @@ export const createRutina = async (req, res) => {
     
     try {
         const body = req.body;
+        console.log(body);
     
-        const clientFound = await Clients.findOne({_id: req.params.cid});
-        if(!clientFound) return res.send("El cliente y/o alumno no existe");
+        // const clientFound = await Clients.findOne({_id: req.params.cid});
+        // if(!clientFound) return res.send("El cliente y/o alumno no existe");
         
-        const clientData = {
-            client: {
-                id: clientFound._id,
-                name: clientFound.name,
-                lastName: clientFound.lastName
-            }
-        };
+        // const clientData = {
+        //     client: {
+        //         id: clientFound._id,
+        //         name: clientFound.name,
+        //         lastName: clientFound.lastName
+        //     }
+        // };
 
-        const rutinaOfClient = await Rutinas.findOne(clientData);
-        if (rutinaOfClient) return res.send("Ya existe rutina para este cliente");
+        // const rutinaOfClient = await Rutinas.findOne(clientData);
+        // if (rutinaOfClient) return res.send("Ya existe rutina para este cliente");
 
-        const rutinaBody = {...clientData,... body};
+        // const rutinaBody = {...clientData,... body};
         
-        const rutina = new Rutinas(rutinaBody);
-        const saveRutina = await rutina.save();
+        // const rutina = new Rutinas(rutinaBody);
+        // const saveRutina = await rutina.save();
 
-        res.status(200).json(saveRutina);    
+        // res.status(200).json(saveRutina);    
     } catch (error) {
         res.status(500).json({message: `Error interno del servidor ${error}`});
     }
