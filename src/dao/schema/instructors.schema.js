@@ -16,6 +16,16 @@ const instructorsSchema = new Schema ({
         required: true,
         trim: true
     },
+    nameStreet:{
+        type: String,
+        required: true,
+        trim: true
+    },
+    numberStreet: {
+        type: Number,
+        required: true,
+        trim: true
+    },
     email: {
         type: String,
         required: true,
@@ -25,6 +35,11 @@ const instructorsSchema = new Schema ({
         type: String,
         required: true,
         trim: true
+    },
+    role: {
+        type: String,
+        required: true,
+        trim: true 
     }
 }, {
     versionKey: false,

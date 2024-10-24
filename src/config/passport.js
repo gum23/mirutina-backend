@@ -1,5 +1,7 @@
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
+import googlepassport from 'passport-google-oauth20';
+import config from '../config.js';
 import { compareHashAndPass, createHash } from '../utils/bcrypt.utils.js';
 
 //Managers
@@ -22,23 +24,29 @@ export const initializePassport = () => {
                     if(instructorFound) return done("Error, el instructor ya está registrado");
 
                     let passwordCrypt = await createHash(password);
+                    console.log(passwordCrypt);
                     
                     const newInstructor = new InstructorManager(
                         user.name,
                         user.province,
                         user.city,
+                        user.nameStreet,
+                        user.numberStreet,
                         username,
-                        passwordCrypt
+                        passwordCrypt,
+                        user.role
                     )
                     
                     const result = await instructorsModel.create(newInstructor);
                     return done(null, result);
 
                 } else if(user.role == "usuario"){
+                    
                     const userFound = await usersModel.findOne({email: username});
                     if(userFound) return done("Error, el usuario ya está registrado");
 
                     let passwordCrypt = await createHash(password);
+                    const instructorId = user.instructor;
                     
                     const newUser = new UserManager(
                         user.name,
@@ -46,7 +54,9 @@ export const initializePassport = () => {
                         user.province,
                         user.city,
                         username,
-                        passwordCrypt
+                        passwordCrypt,
+                        user.role,
+                        instructorId
                     )
                     
                     const result = await usersModel.create(newUser);
@@ -91,6 +101,28 @@ export const initializePassport = () => {
 
         }
     ));
+
+    passport.use('google', new googlepassport.Strategy({
+        clientID: `${config.GOOGLE_CLIENT_ID}`,
+        clientSecret: `${config.GOOGLE_CLIENT_SECRET}`,
+        callbackURL: `${config.GOOGLE_CALLBACK_URL}`
+    }, async(accessToken, refreshToken, profile, done) => {
+        try {
+
+            if(user.role == "instructor") {
+                const user = await instructorsModel.findOrCreate({googleId: profile.id}, function(err, user){
+                    return cb(err, user);
+                });
+            } else if(user.role == "usuario"){
+                const user = await usersModel.findOrCreate({googleId: profile.id}, function(err, user){
+                    return cb(err, user);
+                });
+            }
+        
+        } catch (error) {
+            return done("Error al ingresar", error);
+        }
+    }));
 
     passport.serializeUser((user, done) => {
         done(null, user);

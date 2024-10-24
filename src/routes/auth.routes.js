@@ -1,6 +1,7 @@
 import { Router } from "express";
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
+import config from '../config.js';
 const router = Router();
 
 router.post("/register", passport.authenticate('register', {failureRedirect: '/failedRegister'}), (req, res) => {
@@ -23,11 +24,20 @@ router.post("/login", (req, res, next) => {
 
             const userData = {
                 id: user._id,
-                name: user.name
+                name: user.name,
+                lastName: user.lastName,
+                role: user.role
             }
 
-            const token = jwt.sign(userData, `miRutina`, { expiresIn: "1h" });
-            res.cookie('miRutinaCookie', token, ).send("Se ha logueado correctamente!!!");
+            const token = jwt.sign(userData, `${config.JWT_SECRET}`, { expiresIn: "1h" });
+
+            if (userData.role === "instructor") {
+                req.session.instructor = userData;
+            } else {
+                req.session.users = userData;
+            }
+            
+            res.cookie('miRutinaCookie', token, ).send({data: userData});
         })
 
     })(req, res, next);

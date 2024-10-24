@@ -12,6 +12,7 @@ import session from 'express-session';
 //Import rout`s
 import authRoutes from './routes/auth.routes.js';
 import rutinasRoutes from './routes/rutinas.routes.js';
+import instructorsRoutes from './routes/instructors.routes.js';
 
 //Create app
 export const app = express();
@@ -39,6 +40,7 @@ app.use(session({secret: 'tuRutina', resave:false, saveUninitialized: true}))
 //Use of route imported
 app.use(authRoutes);
 app.use(rutinasRoutes);
+app.use(instructorsRoutes);
 
 //port where the serer listens
 export const PORT = config.PORT; 

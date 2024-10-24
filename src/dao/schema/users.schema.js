@@ -32,6 +32,11 @@ const usersSchema = new Schema ({
         required: true,
         trim: true
     },
+    role: {
+        type: String,
+        required: true,
+        trim: true
+    },
     instructor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "instructors"

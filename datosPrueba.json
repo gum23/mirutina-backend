@@ -1,0 +1,42 @@
+[
+    {
+        "name": "David",
+        "lastName": "Migliore",
+        "province": "Santa fe",
+        "city": "Carcarañá",
+        "email": "david89@gmail.com",
+        "password": "millo23",
+        "role": "usuario",
+        "instructor": "671aa2c971a21b481f09e2b7"
+    },
+    {
+        "name": "Alfredo",
+        "lastName": "Migliore",
+        "province": "Santa fe",
+        "city": "Carcarañá",
+        "email": "fredo89@gmail.com",
+        "password": "millo23",
+        "role": "usuario",
+        "instructor": "671aa2c971a21b481f09e2b7"
+    },
+    {
+        "name": "Lucas",
+        "lastName": "Migliore",
+        "province": "Santa fe",
+        "city": "Carcarañá",
+        "email": "luc89@gmail.com",
+        "password": "millo23",
+        "role": "usuario",
+        "instructor": "671aa2c971a21b481f09e2c5"
+    },
+    {
+        "name": "kren",
+        "lastName": "Unrrein",
+        "province": "Santa fe",
+        "city": "Carcarañá",
+        "email": "kren22@gmail.com",
+        "password": "millo23",
+        "role": "usuario",
+        "instructor": "671aa2c971a21b481f09e3f7"
+    }
+]
